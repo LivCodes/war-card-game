@@ -23,6 +23,9 @@ function drawTwo() {
     .then((res) => res.json()) // parse response as JSON
     .then((data) => {
       console.log(data);
+      if (data.remaining === 0) {
+        reShuffleDeck();
+      }
       document.querySelector("#Player1").src = data.cards[0].image;
       document.querySelector("#Player2").src = data.cards[1].image;
       let player1Val = convertToNum(data.cards[0].value);
@@ -53,4 +56,16 @@ function convertToNum(val) {
   } else {
     return Number(val);
   }
+}
+
+function reShuffleDeck() {
+  let url = `https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {
+      console.log(`Error: ${err}`);
+    });
 }
